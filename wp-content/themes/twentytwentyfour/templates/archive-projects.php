@@ -49,3 +49,32 @@ echo do_shortcode( '[display_coffee]' );
 echo do_shortcode( '[kanye_quotes]' );
 
 get_footer();
+?>
+<script>
+    // Make Ajax request to get projects
+jQuery(document).ready(function($) {
+    var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+
+    $.ajax({
+        url: ajaxurl,
+        type: 'POST',
+        data: {
+            action: 'get_architecture_projects',
+        },
+        success: function(response) {
+            if (response.success) {
+                // Handle the returned data
+                var projects = response.data;
+                console.log(projects);
+            } else {
+                console.error('Ajax request failed.');
+            }
+        },
+        error: function(error) {
+            console.error('Ajax request failed:', error);
+        }
+    });
+});
+
+</script>
+
